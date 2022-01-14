@@ -1,0 +1,81 @@
+<h2>Dánh sách phiếu bảo dưỡng được đưa vào thùng rác</h2>
+<a href="show">Xem phiếu bảo dưỡng chưa xóa</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Tên khách hàng</th>
+      <th>Số điện thoại</th>
+      <th>Ngày hẹn bảo dưỡng</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each repair}}
+      <tr>
+        <td>{{ this.customer }}</td>
+        <td>{{ this.phone }}</td>
+        <td>{{ this.appointment_date }}</td>
+        <td><a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Khôi phục</a></td>
+        <td><a href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-repair-modal">Xóa vĩnh viễn</a></td>
+        </tr>
+    {{else}}
+        <td colspan="9" class="text-center">
+            Chưa có phiếu bảo dưỡng nào.  
+        </td>
+    {{/each}}
+  </tbody>
+</table>
+
+{{!-- Confirm Delete --}}
+<div id="delete-repair-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa phiếu bảo dưỡng vĩnh viễn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc xóa phiếu bảo dưỡng này vĩnh viễn???</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-repair" type="button" class="btn btn-danger">Xóa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form name="delete-repair-form" method="POST"></form>
+<form name="restore-repair-form" method="POST"></form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var repairId;
+        var deleteForm = document.forms['delete-repair-form'];
+        var restoreForm = document.forms['restore-repair-form'];
+        var btnDeleterepair = document.getElementById('btn-delete-repair');
+        var btnRestore = $('.btn-restore');
+
+        // When dialog show
+        $('#delete-repair-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            repairId = button.data('id');
+        });
+
+        btnDeleterepair.onclick = function () {
+            deleteForm.action = `/repair/force/${repairId}?_method=DELETE`;
+            deleteForm.submit();
+        }
+
+        btnRestore.click(function (e) {
+            e.preventDefault();
+            var courseDeleteId = $(this).data('id');
+            restoreForm.action = `/repair/restore/${courseDeleteId}?_method=PATCH`;
+            restoreForm.submit();
+        });
+    });
+</script>

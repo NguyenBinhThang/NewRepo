@@ -1,0 +1,73 @@
+<h2>Danh sách hóa đơn</h2>
+<a href="trash">Thùng rác</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Tên khách hàng</th>
+      <th>Tên xe</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each bill}}
+      <tr>
+        <td>{{ this.namePur }}</td>
+        <td>{{ this.nameCar }}</td>
+        <td><a href="/bill/info/{{this._id}}" class="btn btn-link">Thông tin</a></td>
+        <td><a href="/bill/edit/{{this._id}}" class="btn btn-link">Chỉnh sửa</a></td>
+        <td><a href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-bill-modal">Xóa</a></td>
+      </tr>
+    {{else}}  
+        <td colspan="9" class="text-center">
+            Chưa có hóa đơn.
+            <a href="create">Thêm hóa đơn</a>
+        </td>
+    {{/each}}
+  </tbody>
+</table>
+
+{{!-- Confirm Delete --}}
+<div id="delete-bill-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa hóa đơn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn xóa hóa đơn này???</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-bill" type="button" class="btn btn-danger">Xóa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form name="delete-bill-form" method="POST"></form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var billId;
+        var deleteForm = document.forms['delete-bill-form'];
+        var btnDeletebill = document.getElementById('btn-delete-bill');
+
+        // When dialog show
+        $('#delete-bill-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            billId = button.data('id');
+        });
+
+        btnDeletebill.onclick = function () {
+            deleteForm.action = `/bill/${billId}?_method=DELETE`;
+            deleteForm.submit();
+        }
+    });
+
+</script>

@@ -1,0 +1,32 @@
+<h2>Danh sách hóa đơn</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Tên khách hàng</th>
+      <th>Tên xe</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each bill}}
+      <tr>
+        <td>{{ this.namePur }}</td>
+        <td>{{ this.nameCar }}</td>
+        <td onclick="myFunction()"><a href="/bill/info/{{this._id}}" class="btn btn-link"  >Xuất</a></td>
+      </tr>
+    {{else}}  
+        <td colspan="9" class="text-center">
+            Chưa có hóa đơn nào.
+            <a href="create">Thêm hóa đơn</a>
+        </td>
+    {{/each}}
+  </tbody>
+</table>
+
+<script>
+function myFunction() {
+  alert("Xuất hóa đơn thành công!!");
+}
+</script>

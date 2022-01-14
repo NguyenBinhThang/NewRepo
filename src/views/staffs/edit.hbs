@@ -1,0 +1,27 @@
+<div class="row justify-content-center">
+    <div class="col col-8">
+        <h2 class="text-center">Chỉnh Sửa Thông Tin Nhân Viên</h2>
+        <form action="/staffs/update/{{ staff._id }}?_method=PUT" method="POST">
+            <div class="form-group">
+                <label for="staffName">Họ và Tên Nhân Viên:</label>
+                <input type="text" class="form-control" name="staffName" placeholder="StaffName" id="staffName">
+            </div>
+            <div class="form-group">
+                <label for="staffImage">StaffImage:</label>
+                <input type="text" class="form-control" name="staffImage" placeholder="StaffImage" id="staffImage">
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Số Điện Thoại:</label>
+                <input type="text" class="form-control" name="phoneNumber" placeholder="PhoneNumber" id="phoneNumber">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" name="email" placeholder="Email" id="email">
+            </div>
+            <div class="form-group">
+                <p class="text-danger">{{message}}</p>
+            </div>
+            <button type="submit" class="btn btn-primary"> Cập Nhật </button>
+        </form>
+    </div>
+</div>

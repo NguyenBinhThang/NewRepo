@@ -1,0 +1,88 @@
+{{!-- Can be viewed as trash --}}
+<div class="text-center">
+    <h2>Danh Sách Nhân Viên Bị Sa Thải</h2>
+</div>
+<button type="submit" name="update"  id="update" class="waves-effect waves-light btn indigo m-b-xs">
+    <a href="show">Danh Sách Nhân Viên</a>
+</button>
+<table class="table table-striped">
+  <thead>
+    <tr>
+        <th>Họ và Tên Nhân Viên</th>
+        <th>Số Điện Thoại</th>
+        <th>Email</th>
+        <th>Date In</th>
+        <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each staffs}}
+        <tr>
+            <td>{{ this.name }}</td>
+            <td>{{ this.PhoneNumber }}</td>
+            <td>{{ this.email }}</td>
+            <td>{{ this.createAt }}</td>
+            <td>{{ this.role }}</td>
+            <td><a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Phục Hồi</a></td>
+            <td><a href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-staff-modal">Xóa Vĩnh Viễn</a></td>
+        </tr>
+    {{else}}
+        <td colspan="8" class="text-center">
+            Không Tìm Thấy Nhân Viên.
+        </td>
+    {{/each}}
+  </tbody>
+</table>
+
+{{!-- Confirm Delete --}}
+<div id="delete-staff-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa Vĩnh Viễn Nhân Viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn Có Chắc Muốn Xóa Không ?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-Staff" type="button" class="btn btn-danger">Xóa Vĩnh Viễn</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form name="delete-staff-form" method="POST"></form>
+<form name="restore-staff-form" method="POST"></form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var carId;
+        var deleteForm = document.forms['delete-staff-form'];
+        var callbackForm = document.forms['restore-staff-form'];
+        var btnDeleteStaff = document.getElementById('btn-delete-Staff');
+        var btnCallback = $('.btn-restore');
+
+        // When dialog show
+        $('#delete-staff-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            staffId = button.data('id');
+        });
+
+        btnDeleteStaff.onclick = function () {
+            deleteForm.action = `/staffs/force/${staffId}?_method=DELETE`;
+            deleteForm.submit();
+        }
+
+        btnCallback.click(function (e) {
+            e.preventDefault();
+            var courseDeleteId = $(this).data('id');
+            callbackForm.action = `/staffs/callback/${courseDeleteId}?_method=PATCH`;
+            callbackForm.submit();
+        });
+    });
+</script>

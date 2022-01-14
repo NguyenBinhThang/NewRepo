@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand" href="/">Logo</a>
+  <ul class="navbar-nav">
+    {{#if (compare session.user.role 1 1)}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          Quản lý tài khoản
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/users/show">Danh sách tài khoản</a>
+          <a class="dropdown-item" href="/users/trash">Danh sách tài khoản đã xóa</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          Quản lý nhân viên
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/staffs/create">Tạo nhân viên</a>
+          <a class="dropdown-item" href="/staffs/show">Xem nhân viên</a>
+          <a class="dropdown-item" href="/staffs/reserve">Nhân viên bị sa thải</a>
+        </div>
+      </li>
+    {{/if}}
+    {{#if (compare session.user.role 5 1)}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          Quản lý khách hàng
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/customers/create">Tạo khách hàng</a>
+          <a class="dropdown-item" href="/customers/show">Danh sách khách hàng</a>
+        </div>
+      </li>
+    {{/if}}
+    {{#if (compare session.user.role 4 1)}}
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Quản lý xe
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/cars/create">Thêm xe mới</a>
+        <a class="dropdown-item" href="/cars/show">Danh sách xe </a>
+        <a class="dropdown-item" href="/cars/trash">Danh sách xe đã bán</a>
+      </div>
+    </li>
+    {{/if}}
+    {{#if (compare session.user.role 2 1)}}
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Quản lý hóa đơn
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/bill/create">Tạo hóa đơn</a>
+        <a class="dropdown-item" href="/bill/show">Danh sách hóa đơn</a>
+        <a class="dropdown-item" href="/bill/issue">Xuất hóa đơn</a>
+        <a class="dropdown-item" href="/statistics/bill">Thống kê hóa đơn</a>
+        <a class="dropdown-item" href="/statistics/repair">Thống kê bảo dưỡng</a>
+      </div>
+    </li>
+    {{/if}}
+    {{#if (compare session.user.role 3 1)}}
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Quản lý bảo dưỡng
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/repair/create">Tạo phiếu bảo dưỡng</a>
+        <a class="dropdown-item" href="/repair/show">Danh sách phiếu bảo dưỡng</a>
+        <a class="dropdown-item" href="/repair/issue">Xuất phiếu bảo dưỡng</a>
+      </div>
+    </li>
+    {{/if}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          Quản lý cá nhân
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/users/info/{{ session.user._id }}">Xem thông tin cá nhân</a>
+          <a class="dropdown-item" href="/users/changePassword/{{ session.user._id }}">Đổi mật khẩu</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <span class="nav-link" href="/users/logout">
+          Tên: {{session.user.name}}
+        </span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link log-out" href="/users/logout">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </a>
+      </li>
+  </ul>
+</nav>

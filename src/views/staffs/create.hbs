@@ -1,0 +1,32 @@
+<div class="row justify-content-center">
+    <div class="col col-8">
+        <h2 class="text-center">Tạo Mới Nhân Viên</h2>
+        <form action="/staffs/list" method="post">
+            <div class="form-group">
+                <label for="name">Họ và Tên Nhân Viên:</label>
+                <input type="text" class="form-control" name="name" placeholder="StaffName" id="name">
+            </div>
+            <div class="form-group">
+                <label for="image">StaffImage:</label>
+                <input type="text" class="form-control" name="image" placeholder="StaffImage" id="image">
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber">Số Điện Thoại:</label>
+                <input type="text" class="form-control" name="PhoneNumber" placeholder="PhoneNumber" id="PhoneNumber">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" name="email" placeholder="Email" id="email">
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <input type="text" class="form-control" name="role" placeholder="Role" id="role">
+            </div>
+            
+            <div class="form-group">
+                <p class="text-danger">{{message}}</p>
+            </div>
+            <button type="submit" class="btn btn-primary"> Tạo </button>
+        </form>
+    </div>
+</div>

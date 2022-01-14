@@ -1,0 +1,50 @@
+<h2>Thống kê bảo dưỡng</h2>
+<form action="" name="statistics-repair-form" method="POST">
+    <label for="startDate">StartDate</label>
+    <input type="date" id="startDate" name="startDate">
+    <label for="endDate">EndDate</label>
+    <input type="date" id="endDate" name="endDate">
+    <button id="btn-statistics">Lọc</button>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Tên khách hàng</th>
+      <th>Địa chỉ</th>
+      <th>Số điện thoại</th>
+      <th>Phương thức sửa chữa</th>
+      <th>Số tiền</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each repairs}}
+      <tr>
+        <td>{{ this.customer }}</td>
+        <td>{{ this.address }}</td>
+        <td>{{ this.phone }}</td>
+        <td>{{ this.method }}</td>
+        <td>{{ this.price }}</td>
+      </tr>
+    {{/each}}
+    <tr>
+        <td colspan="3" class="text-center">Tổng tiền</td>
+        <td colspan="3" class="text-center">{{ cash }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var startDate = document.getElementById('startDate');
+        var endDate = document.getElementById('endDate');
+        var statisticsForm = document.forms['statistics-repair-form'];
+        var btnStatisticsRepair = document.getElementById('btn-statistics');
+
+        btnStatisticsRepair.onclick = function () {
+            statisticsForm.action = `{{process.env.BASE_URL}}/statistics/repairPost/` + startDate.value + '/' + endDate.value;
+            statisticsForm.submit();
+        }
+    });
+</script>

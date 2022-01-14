@@ -1,0 +1,92 @@
+<h2 class="text-center">Danh sách khách hàng đã xoá</h2>
+<div class="text-center">
+<a href="show" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem khách hàng chưa xoá</a>
+</div>
+<div class="row justify-content-center">
+<div class="col-auto">
+<table class="table table-responsive">
+  <thead>
+    <tr>
+      <th>Tên khách hàng</th>
+      <th>Địa chỉ</th>
+      <th>Email</th>
+      <th>Số điện thoại</th>
+      <th>Ngày tạo</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each customers}}
+        <tr>
+            <td>{{ this.name }}</td>
+            <td>{{ this.address }}</td>
+            <td>{{ this.email }}</td>
+            <td>{{ this.phone }}</td>
+            <td>{{ this.createAt }}</td>
+            <td><a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Khôi phục</a></td>
+            <td><a href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-customer-modal">Xoá vĩnh viễn</a></td>
+        </tr>
+    {{else}}
+        <td colspan="9" class="text-center">
+            Không tìm thấy khách hàng
+        </td>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+</div>
+
+
+{{!-- Confirm Delete --}}
+<div id="delete-customer-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xoá vĩnh viễn khách hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có muốn xoá???</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-Car" type="button" class="btn btn-danger">Xoá vĩnh viễn</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form name="delete-customer-form" method="POST"></form>
+<form name="restore-customer-form" method="POST"></form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var customerId;
+        var deleteForm = document.forms['delete-customer-form'];
+        var restoreForm = document.forms['restore-customer-form'];
+        var btnDeleteCustomer = document.getElementById('btn-delete-Customer');
+        var btnRestore = $('.btn-restore');
+
+        // When dialog show
+        $('#delete-customer-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            customerId = button.data('id');
+        });
+
+        btnDeleteCustomer.onclick = function () {
+            deleteForm.action = `/customers/force/${customerId}?_method=DELETE`;
+            deleteForm.submit();
+        }
+
+        btnRestore.click(function (e) {
+            e.preventDefault();
+            var courseDeleteId = $(this).data('id');
+            restoreForm.action = `/customers/restore/${courseDeleteId}?_method=PATCH`;
+            restoreForm.submit();
+        });
+    });
+</script>

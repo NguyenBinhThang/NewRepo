@@ -1,0 +1,91 @@
+<h2>Dánh sách hóa đơn được đưa vào thùng rác</h2>
+<a href="show">Xem hóa đơn chưa xóa</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Tên khách hàng</th>
+      <th>Địa chỉ</th>
+      <th>Số điện thoại</th>
+      <th>Tên nhân viên bán</th>
+      <th>Tên xe</th>
+      <th>Giá bán</th>
+      <th>Tên hãng sản xuất</th>
+      <th>Ngày tạo hóa đơn</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each bill}}
+      <tr>
+        <td>{{ this.namePur }}</td>
+        <td>{{ this.address }}</td>
+        <td>{{ this.phone }}</td>
+        <td>{{ this.nameSeller }}</td>
+        <td>{{ this.nameCar }}</td>
+        <td>{{ this.price }}</td>
+        <td>{{ this.carManufacturer }}</td>
+        <td>{{ this.createAt }}</td>
+        <td><a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Khôi phục</a></td>
+        <td><a href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-bill-modal">Xóa vĩnh viễn</a></td>
+        </tr>
+    {{else}}
+        <td colspan="9" class="text-center">
+            Chưa có hóa đơn nào.  
+        </td>
+    {{/each}}
+  </tbody>
+</table>
+
+{{!-- Confirm Delete --}}
+<div id="delete-bill-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa hóa đơn vĩnh viễn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc xóa hóa đơn này vĩnh viễn???</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-bill" type="button" class="btn btn-danger">Xóa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form name="delete-bill-form" method="POST"></form>
+<form name="restore-bill-form" method="POST"></form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var billId;
+        var deleteForm = document.forms['delete-bill-form'];
+        var restoreForm = document.forms['restore-bill-form'];
+        var btnDeletebill = document.getElementById('btn-delete-bill');
+        var btnRestore = $('.btn-restore');
+
+        // When dialog show
+        $('#delete-bill-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            billId = button.data('id');
+        });
+
+        btnDeletebill.onclick = function () {
+            deleteForm.action = `/bill/force/${billId}?_method=DELETE`;
+            deleteForm.submit();
+        }
+
+        btnRestore.click(function (e) {
+            e.preventDefault();
+            var courseDeleteId = $(this).data('id');
+            restoreForm.action = `/bill/restore/${courseDeleteId}?_method=PATCH`;
+            restoreForm.submit();
+        });
+    });
+</script>

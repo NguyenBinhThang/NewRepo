@@ -1,0 +1,30 @@
+<h2>Danh sách phiếu bảo dưỡng</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Tên Khách Hàng</th>
+      <th>Số điện thoại</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each repair}}
+      <tr>
+        <td>{{ this.customer }}</td>
+        <td>{{ this.phone }}</td>
+        <td onclick="myFunction()"><a href="/repair/info/{{this._id}}" class="btn btn-link">Xuất</a></td>
+      </tr>
+    {{else}}  
+        <td colspan="9" class="text-center">
+            Chưa có phiếu bảo dưỡng nào.
+            <a href="create">Thêm phiếu bảo dưỡng</a>
+        </td>
+    {{/each}}
+  </tbody>
+</table>
+
+<script>
+function myFunction() {
+  alert("Xuất phiếu bảo đương thành công!!");
+}
+</script>

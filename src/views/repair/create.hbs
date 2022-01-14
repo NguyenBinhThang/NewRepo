@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+    <div class="col col-8">
+        <h2 class="text-center">Tạo Phiếu Bảo Dưỡng</h2>
+        <form id="f" action="/repair/store" method="post">
+            <div class="form-group">
+                <label for="customer">Tên Khách Hàng:</label>
+                <input type="text" class="form-control" name="customer" placeholder="Tên Khách Hàng" id="customer">
+            </div>
+            <div class="form-group">
+                <label for="address">Địa Chỉ:</label>
+                <input type="text" class="form-control" name="address" placeholder="Địa Chỉ" id="address">
+            </div>
+            <div class="form-group">
+                <label for="phone">Số Điện Thoại:</label>
+                <input type="text" class="form-control" name="phone" placeholder="Số Điện Thoại" id="phone">
+            </div>
+            <div class="form-group">
+                <label for="appointment_date">Ngày Hẹn Bảo Dưỡng:</label>
+                <input type="text" class="form-control" name="appointment_date" placeholder="Ngày Hẹn Bảo Dưỡng" id="appointment_date">
+            </div>
+            <div class="form-group">
+                <label for="sale_date">Ngày Bán Xe:</label>
+                <input type="text" class="form-control" name="sale_date" placeholder="Ngày Bán Xe" id="sale_date">
+            </div>
+            <div class="form-group">
+                <label for="maintenance">Thành Phần Bảo Dưỡng:</label>
+                <input type="text" class="form-control" name="maintenance" placeholder="Thành Phần Bảo Dưỡng" id="maintenance">
+            </div>
+            <div class="form-group">
+                <label for="method">Phương Pháp Bảo Dưỡng:</label>
+                <input type="text" class="form-control" name="method" placeholder="Phương Pháp Bảo Dưỡng" id="method">
+            </div>
+            <div class="form-group">
+                <label for="price">Chi phí bảo dưỡng:</label>
+                <input type="text" class="form-control" name="price" placeholder="Phương Pháp Bảo Dưỡng" id="price">
+            </div>
+            <div class="form-group">
+                <label for="note">Ghi Chú:</label>
+                <input type="text" class="form-control" name="note" placeholder="Ghi Chú" id="note">
+            </div>
+            <div class="form-group">
+                <p class="text-danger">{{message}}</p>
+            </div>
+            <button type="submit" class="btn btn-primary">Tạo</button>
+        </form>
+    </div>
+</div>
+
+<script>
+var form = document.getElementById('f');
+
+function myFunction() {
+  if (form.checkValidity()) {
+    alert("Creating Succesful!");
+  }
+}
+</script>
